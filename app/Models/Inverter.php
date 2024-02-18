@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\InverterCommand;
+use App\Services\InverterCommander;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,5 +26,10 @@ class Inverter extends Model
     public function statuses(): HasMany
     {
         return $this->hasMany(InverterStatus::class);
+    }
+
+    public function command(InverterCommand $command): mixed
+    {
+        return InverterCommander::send($this, $command);
     }
 }
