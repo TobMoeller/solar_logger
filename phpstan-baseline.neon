@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$idc \\(float\\|null\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Services/InverterMonitor.php
+
+		-
+			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$pac \\(float\\|null\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Services/InverterMonitor.php
+
+		-
+			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$pdc \\(float\\|null\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Services/InverterMonitor.php
+
+		-
+			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$udc \\(float\\|null\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Services/InverterMonitor.php
