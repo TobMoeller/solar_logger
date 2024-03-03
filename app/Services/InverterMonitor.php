@@ -21,6 +21,7 @@ class InverterMonitor
         $status = new InverterStatus();
 
         try {
+            // @TODO fix type casting
             $status->udc = $this->inverter->command(InverterCommand::UDC);
             $status->idc = $this->inverter->command(InverterCommand::IDC);
             $status->pac = $this->inverter->command(InverterCommand::PAC);
