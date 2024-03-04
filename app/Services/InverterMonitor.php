@@ -31,6 +31,7 @@ class InverterMonitor
             $status->is_online = false;
         } catch (Throwable $exception) {
             Log::error('Store Status failed', ['error' => $exception->getMessage()]);
+
             return $this;
         }
 

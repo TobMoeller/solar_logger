@@ -12,6 +12,10 @@ class Inverter extends Model
 {
     use HasFactory;
 
+    public $casts = [
+        'is_monitored' => 'boolean',
+    ];
+
     /**
      * @return HasMany<InverterOutput>
      */
