@@ -13,7 +13,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->job(MonitorInverters::class)->everyFiveMinutes()->between('04:00', '22:00');
+        $schedule->job(MonitorInverters::class)
+            ->when(config('inverter.monitor.enabled'))
+            ->everyFiveMinutes()
+            ->between('04:00', '22:00');
     }
 
     /**

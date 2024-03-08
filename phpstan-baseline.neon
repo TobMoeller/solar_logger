@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Console\\\\Scheduling\\\\Event\\:\\:when\\(\\) expects bool\\|Closure, mixed given\\.$#"
+			count: 1
+			path: app/Console/Kernel.php
+
+		-
 			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$idc \\(float\\|null\\) does not accept mixed\\.$#"
 			count: 1
 			path: app/Services/InverterMonitor.php
