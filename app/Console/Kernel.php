@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\MonitorInverters;
+use DateTimeZone;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,11 @@ class Kernel extends ConsoleKernel
             ->when(config('inverter.monitor.enabled'))
             ->everyFiveMinutes()
             ->between('04:00', '22:00');
+    }
+
+    protected function scheduleTimezone(): DateTimeZone|string|null
+    {
+        return 'Europe/Berlin';
     }
 
     /**

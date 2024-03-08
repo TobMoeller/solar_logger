@@ -27,10 +27,11 @@ class InverterMonitor
             $status->pac = $this->inverter->command(InverterCommand::PAC);
             $status->pdc = $this->inverter->command(InverterCommand::PDC);
             $status->is_online = true;
-        } catch (InverterUnreachable) {
+        } catch (InverterUnreachable $exception) {
+            Log::debug('Inverter unreachable', ['inverter' => $this->inverter, 'error' => $exception->getMessage()]);
             $status->is_online = false;
         } catch (Throwable $exception) {
-            Log::error('Store Status failed', ['error' => $exception->getMessage()]);
+            Log::error('Store Status failed', ['inverter' => $this->inverter, 'error' => $exception->getMessage()]);
 
             return $this;
         }

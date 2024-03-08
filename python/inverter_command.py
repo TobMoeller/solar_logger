@@ -21,9 +21,8 @@ def send_command(ip, port, command, timeout):
             data = response.decode().strip('\r\n')
             return json.dumps({'success': True, 'data': data, 'error': None})
 
-    # Errors are considered successful as the inverter shuts down and is unreachable when no power is produced
     except Exception as ex:
-        return json.dumps({'success': True, 'data': None, 'error': str(ex)})
+        return json.dumps({'success': False, 'data': None, 'error': str(ex)})
 
 
 parser = argparse.ArgumentParser(description='Send a command to an inverter.')
@@ -35,8 +34,6 @@ parser.add_argument('--timeout', type=int, default=5, help='Timeout in Seconds (
 args = parser.parse_args()
 
 response = send_command(args.ip_address, args.port, args.command, args.timeout)
-# @TODO remove response
-# response = json.dumps({'success': True, 'data': '123', 'error': None})
 
 print(response)
 
