@@ -4,9 +4,11 @@ namespace App\Models;
 
 use App\Enums\InverterCommand;
 use App\Services\InverterCommander;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Inverter extends Model
 {
@@ -35,5 +37,23 @@ class Inverter extends Model
     public function command(InverterCommand $command): mixed
     {
         return InverterCommander::send($this, $command);
+    }
+
+    /**
+     * @return HasOne<InverterStatus>
+     */
+    public function latestStatus(): HasOne
+    {
+        return $this->statuses()->one()->latestOfMany();
+    }
+
+    /**
+     * @return Attribute<bool, bool>
+     */
+    public function isOnline(): Attribute
+    {
+        return new Attribute(
+            get: fn (): bool => $this->latestStatus?->is_online && $this->latestStatus->created_at?->greaterThanOrEqualTo(now()->subMinutes(30)),
+        );
     }
 }
