@@ -14,6 +14,8 @@ class InverterOutput extends Model
         'recorded_at' => 'date',
     ];
 
+    public $guarded = [];
+
     /**
      * @return BelongsTo<Inverter, InverterOutput>
      */
