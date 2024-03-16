@@ -15,14 +15,22 @@ test('it updates every inverter that should be monitored', function () {
 
     $mock1 = Mockery::mock(InverterMonitor::class, [$inverter1], function (MockInterface $mock) {
         $mock->shouldReceive('updateStatus')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('updateOutput')
             ->once();
     });
     $mock2 = Mockery::mock(InverterMonitor::class, [$inverter2], function (MockInterface $mock) {
         $mock->shouldReceive('updateStatus')
+            ->once()
+            ->andReturnSelf()
+            ->shouldReceive('updateOutput')
             ->once();
     });
     $notMonitoredMock = Mockery::mock(InverterMonitor::class, [$notMonitoredInverter], function (MockInterface $mock) {
         $mock->shouldReceive('updateStatus')
+            ->never()
+            ->shouldReceive('updateOutput')
             ->never();
     });
     app()->bind(

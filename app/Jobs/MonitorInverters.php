@@ -19,7 +19,9 @@ class MonitorInverters implements ShouldQueue
         Inverter::where('is_monitored', true)
             ->get()
             ->each(function (Inverter $inverter) {
-                app(InverterMonitor::class, ['inverter' => $inverter])->updateStatus();
+                app(InverterMonitor::class, ['inverter' => $inverter])
+                    ->updateStatus()
+                    ->updateOutput();
             });
     }
 }
