@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Actions\UpdateOrCreateInverterOutput;
 use App\Enums\InverterCommand;
-use App\Enums\TimespanUnit;
 use App\Exceptions\InverterUnreachable;
 use App\Models\Inverter;
 use App\Models\InverterStatus;
@@ -49,50 +48,34 @@ class InverterMonitor
             return $this;
         }
 
-        $updateOrCreateInverterOutput = app(UpdateOrCreateInverterOutput::class);
-
-        if ($outputToday = $this->inverter->command(InverterCommand::YIELD_TODAY)) {
-            $updateOrCreateInverterOutput->handle(
-                $this->inverter,
-                TimespanUnit::DAY,
-                now()->startOfDay(),
-                $outputToday
-            );
-        }
-
-        if (! $this->inverter->outputWasUpdatedToday(TimespanUnit::DAY, $date = now()->yesterday()) &&
-            $outputYesterday = $this->inverter->command(InverterCommand::YIELD_YESTERDAY)
-        ) {
-            $updateOrCreateInverterOutput->handle(
-                $this->inverter,
-                TimespanUnit::DAY,
-                $date,
-                $outputYesterday
-            );
-        }
-
-        if (! $this->inverter->outputWasUpdatedToday(TimespanUnit::MONTH, $date = now()->startOfMonth()) &&
-            $outputMonth = $this->inverter->command(InverterCommand::YIELD_MONTH)
-        ) {
-            $updateOrCreateInverterOutput->handle(
-                $this->inverter,
-                TimespanUnit::MONTH,
-                $date,
-                $outputMonth
-            );
-        }
-
-        if (! $this->inverter->outputWasUpdatedToday(TimespanUnit::YEAR, $date = now()->startOfYear()) &&
-            $outputYear = $this->inverter->command(InverterCommand::YIELD_YEAR)
-        ) {
-            $updateOrCreateInverterOutput->handle(
-                $this->inverter,
-                TimespanUnit::YEAR,
-                $date,
-                $outputYear
-            );
-        }
+        $this->updateOutputFor(InverterCommand::YIELD_TODAY);
+        $this->updateOutputOnceADayFor(InverterCommand::YIELD_YESTERDAY);
+        $this->updateOutputOnceADayFor(InverterCommand::YIELD_MONTH);
+        $this->updateOutputOnceADayFor(InverterCommand::YIELD_YEAR);
 
         return $this;
+    }
+
+    protected function updateOutputFor(InverterCommand $command): void
+    {
+        if (($output = $this->inverter->command($command)) === null) {
+            return;
+        }
+
+        app(UpdateOrCreateInverterOutput::class)
+            ->handle(
+                $this->inverter,
+                $command,
+                $output
+            );
+    }
+
+    protected function updateOutputOnceADayFor(InverterCommand $command): void
+    {
+        if ($this->inverter->outputWasUpdatedToday($command)) {
+            return;
+        }
+
+        $this->updateOutputFor($command);
     }
 }

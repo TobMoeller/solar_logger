@@ -1,8 +1,7 @@
 <?php
 
 use App\Enums\InverterCommand;
-use App\Enums\TimespanUnit;
-use App\Exceptions\InvalidRecordedAtDate;
+use App\Exceptions\InvalidInverterCommand;
 use App\Models\Inverter;
 use App\Models\InverterOutput;
 use App\Models\InverterStatus;
@@ -63,30 +62,26 @@ it('has is_online trait', function (bool $isOnline) {
     Carbon::setTestNow();
 })->with([true, false]);
 
-it('returns if the output for a certain timespan was updated today', function (TimespanUnit $timespan, string $dateString, bool $updatedToday) {
+it('returns if the output for a certain timespan was updated today', function (InverterCommand $command, bool $updatedToday) {
     $inverter = Inverter::factory()
         ->create();
 
     InverterOutput::factory()
         ->state([
-            'timespan' => $timespan,
-            'recorded_at' => $date = Carbon::make($dateString),
+            'timespan' => $command->getOutputTimespan(),
+            'recorded_at' => $command->getOutputDate(),
             'updated_at' => $updatedToday ? now() : now()->subDay(),
         ])
         ->for($inverter)
         ->create();
 
-    expect($inverter->outputWasUpdatedToday($timespan, $date))
+    expect($inverter->outputWasUpdatedToday($command))
         ->toBe($updatedToday);
-})->with([
-    ['timespan' => TimespanUnit::DAY, 'dateString' => '2024-03-03'],
-    ['timespan' => TimespanUnit::MONTH, 'dateString' => '2024-02-01'],
-    ['timespan' => TimespanUnit::YEAR, 'dateString' => '2024-01-01'],
-], [true, false]);
+})->with(InverterCommand::outputCommands(), [true, false]);
 
 it('throws an exception for invalid recorded_at dates', function () {
     $inverter = Inverter::factory()
         ->create();
 
-    $inverter->outputWasUpdatedToday(TimespanUnit::YEAR, Carbon::make('2024-02-01'));
-})->throws(InvalidRecordedAtDate::class, 'Invalid recorded_at given');
+    $inverter->outputWasUpdatedToday(InverterCommand::UDC);
+})->throws(InvalidInverterCommand::class, 'Invalid command');

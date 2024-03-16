@@ -2,27 +2,26 @@
 
 namespace App\Actions;
 
-use App\Enums\TimespanUnit;
-use App\Exceptions\InvalidRecordedAtDate;
+use App\Enums\InverterCommand;
+use App\Exceptions\InvalidInverterCommand;
 use App\Models\Inverter;
 use App\Models\InverterOutput;
-use Illuminate\Support\Carbon;
 
 class UpdateOrCreateInverterOutput
 {
-    public function handle(Inverter $inverter, TimespanUnit $timespan, Carbon $recordedAt, mixed $output): InverterOutput
+    public function handle(Inverter $inverter, InverterCommand $command, mixed $output): InverterOutput
     {
         throw_unless(
-            $timespan->isValidRecordedAtDate($recordedAt),
-            InvalidRecordedAtDate::class,
-            'Invalid recorded_at given'
+            $command->isOutputCommand(),
+            InvalidInverterCommand::class,
+            'Invalid command'
         );
 
         return $inverter->outputs()
             ->updateOrCreate(
                 [
-                    'timespan' => $timespan,
-                    'recorded_at' => $recordedAt,
+                    'timespan' => $command->getOutputTimespan(),
+                    'recorded_at' => $command->getOutputDate(),
                 ],
                 [
                     'output' => $output,

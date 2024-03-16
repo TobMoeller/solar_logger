@@ -12,7 +12,7 @@ class InverterOutput extends Model
     use HasFactory;
 
     public $casts = [
-        'recorded_at' => 'date',
+        'recorded_at' => 'date:Y-m-d',
     ];
 
     public $guarded = [];

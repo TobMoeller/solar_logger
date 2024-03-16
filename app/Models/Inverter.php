@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use App\Enums\InverterCommand;
-use App\Enums\TimespanUnit;
-use App\Exceptions\InvalidRecordedAtDate;
+use App\Exceptions\InvalidInverterCommand;
 use App\Services\InverterCommander;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Carbon;
 
 class Inverter extends Model
 {
@@ -60,17 +58,17 @@ class Inverter extends Model
         );
     }
 
-    public function outputWasUpdatedToday(TimespanUnit $timespan, Carbon $recordedAt): bool
+    public function outputWasUpdatedToday(InverterCommand $command): bool
     {
         throw_unless(
-            $timespan->isValidRecordedAtDate($recordedAt),
-            InvalidRecordedAtDate::class,
-            'Invalid recorded_at given'
+            $command->isOutputCommand(),
+            InvalidInverterCommand::class,
+            'Invalid command'
         );
 
         return $this->outputs()
-            ->where('timespan', $timespan)
-            ->whereDate('recorded_at', $recordedAt)
+            ->where('timespan', $command->getOutputTimespan())
+            ->whereDate('recorded_at', $command->getOutputDate())
             ->updatedToday()
             ->exists();
     }
