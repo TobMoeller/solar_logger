@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Enums\InverterCommand;
+use App\Enums\TimespanUnit;
+use App\Exceptions\InvalidRecordedAtDate;
 use App\Services\InverterCommander;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 class Inverter extends Model
 {
@@ -44,7 +47,7 @@ class Inverter extends Model
      */
     public function latestStatus(): HasOne
     {
-        return $this->statuses()->one()->latestOfMany();
+        return $this->statuses()->one()->ofMany('created_at', 'max');
     }
 
     /**
@@ -55,5 +58,20 @@ class Inverter extends Model
         return new Attribute(
             get: fn (): bool => $this->latestStatus?->is_online && $this->latestStatus->created_at?->greaterThanOrEqualTo(now()->subMinutes(30)),
         );
+    }
+
+    public function outputWasUpdatedToday(TimespanUnit $timespan, Carbon $recordedAt): bool
+    {
+        throw_unless(
+            $timespan->isValidRecordedAtDate($recordedAt),
+            InvalidRecordedAtDate::class,
+            'Invalid recorded_at given'
+        );
+
+        return $this->outputs()
+            ->where('timespan', $timespan)
+            ->whereDate('recorded_at', $recordedAt)
+            ->updatedToday()
+            ->exists();
     }
 }

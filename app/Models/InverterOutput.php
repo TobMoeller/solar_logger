@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,5 +23,10 @@ class InverterOutput extends Model
     public function inverter(): BelongsTo
     {
         return $this->belongsTo(Inverter::class);
+    }
+
+    public function scopeUpdatedToday(Builder $query): void
+    {
+        $query->whereDate('updated_at', now());
     }
 }
