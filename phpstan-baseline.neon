@@ -6,6 +6,11 @@ parameters:
 			path: app/Console/Kernel.php
 
 		-
+			message: "#^Access to an undefined property App\\\\Models\\\\Inverter\\:\\:\\$is_online\\.$#"
+			count: 1
+			path: app/Services/InverterMonitor.php
+
+		-
 			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$idc \\(float\\|null\\) does not accept mixed\\.$#"
 			count: 1
 			path: app/Services/InverterMonitor.php
