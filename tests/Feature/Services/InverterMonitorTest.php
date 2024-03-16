@@ -10,7 +10,6 @@ use App\Services\InverterCommander;
 use App\Services\InverterMonitor;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
 use function Pest\Laravel\assertDatabaseHas;
 

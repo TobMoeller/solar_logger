@@ -90,4 +90,3 @@ it('throws an exception for invalid recorded_at dates', function () {
 
     $inverter->outputWasUpdatedToday(TimespanUnit::YEAR, Carbon::make('2024-02-01'));
 })->throws(InvalidRecordedAtDate::class, 'Invalid recorded_at given');
-

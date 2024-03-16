@@ -8,7 +8,6 @@ use App\Enums\TimespanUnit;
 use App\Exceptions\InverterUnreachable;
 use App\Models\Inverter;
 use App\Models\InverterStatus;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
