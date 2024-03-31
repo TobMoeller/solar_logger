@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Inverter;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -36,8 +35,8 @@ class InverterIsOfflineNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Inverter ' . $this->inverter->id . ' is offline')
-            ->line('Inverter ' . $this->inverter->id . ' is offline');
+            ->subject('Inverter '.$this->inverter->id.' is offline')
+            ->line('Inverter '.$this->inverter->id.' is offline');
     }
 
     /**

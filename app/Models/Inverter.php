@@ -75,7 +75,7 @@ class Inverter extends Model
     }
 
     /**
-     * @param Builder<Inverter> $query
+     * @param  Builder<Inverter>  $query
      */
     public function scopeIsOfflineForOneDay(Builder $query): void
     {

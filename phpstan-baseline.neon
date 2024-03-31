@@ -2,7 +2,7 @@ parameters:
 	ignoreErrors:
 		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Console\\\\Scheduling\\\\Event\\:\\:when\\(\\) expects bool\\|Closure, mixed given\\.$#"
-			count: 1
+			count: 2
 			path: app/Console/Kernel.php
 
 		-
