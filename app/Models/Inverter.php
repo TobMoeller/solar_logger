@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\InverterCommand;
 use App\Exceptions\InvalidInverterCommand;
 use App\Services\InverterCommander;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -71,5 +72,16 @@ class Inverter extends Model
             ->whereDate('recorded_at', $command->getOutputDate())
             ->updatedToday()
             ->exists();
+    }
+
+    /**
+     * @param Builder<Inverter> $query
+     */
+    public function scopeIsOfflineForOneDay(Builder $query): void
+    {
+        $query->whereDoesntHave('statuses', function (Builder $query) {
+            $query->where('is_online', true)
+                ->where('created_at', '>=', now()->subDay());
+        });
     }
 }
