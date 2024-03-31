@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\MonitorInverters;
+use App\Jobs\NotifyForOfflineInverters;
 use DateTimeZone;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -18,6 +19,10 @@ class Kernel extends ConsoleKernel
             ->when(config('inverter.monitor.enabled'))
             ->everyFiveMinutes()
             ->between('04:00', '22:00');
+
+        $schedule->job(NotifyForOfflineInverters::class)
+            ->when(config('inverter.notifications.enabled'))
+            ->dailyAt('10:00');
     }
 
     protected function scheduleTimezone(): DateTimeZone|string|null

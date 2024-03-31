@@ -85,3 +85,45 @@ it('throws an exception for invalid recorded_at dates', function () {
 
     $inverter->outputWasUpdatedToday(InverterCommand::UDC);
 })->throws(InvalidInverterCommand::class, 'Invalid command');
+
+it('queries for inverters, without an online status within the last day', function () {
+    Carbon::setTestNow(now());
+
+    $notFoundInverter = Inverter::factory()
+        ->has(
+            InverterStatus::factory()
+                ->state([
+                    'is_online' => true,
+                    'created_at' => now(),
+                ]),
+            'statuses'
+        )
+        ->create();
+    $inverter1 = Inverter::factory()
+        ->has(
+            InverterStatus::factory()
+                ->state([
+                    'is_online' => true,
+                    'created_at' => now()->subDay()->subHour(),
+                ]),
+            'statuses'
+        )
+        ->create();
+    $inverter2 = Inverter::factory()
+        ->has(
+            InverterStatus::factory()
+                ->state([
+                    'is_online' => false,
+                    'created_at' => now(),
+                ]),
+            'statuses'
+        )
+        ->create();
+
+    expect(Inverter::isOfflineForOneDay()->get())
+        ->pluck('id')
+        ->toContain($inverter1->id, $inverter2->id)
+        ->not()->toContain($notFoundInverter->id);
+
+    Carbon::setTestNow();
+});

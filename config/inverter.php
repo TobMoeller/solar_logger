@@ -7,4 +7,8 @@ return [
     'monitor' => [
         'enabled' => env('INVERTER_MONITOR_ENABLED', true),
     ],
+    'notifications' => [
+        'enabled' => env('INVERTER_NOTIFICATIONS_ENABLED', false),
+        'email' => env('INVERTER_NOTIFICATIONS_EMAIL'),
+    ],
 ];
