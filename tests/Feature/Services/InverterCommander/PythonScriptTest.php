@@ -5,6 +5,7 @@ use App\Exceptions\InvalidInverter;
 use App\Exceptions\InverterUnreachable;
 use App\Models\Inverter;
 use App\Services\InverterCommander\PythonScript;
+use App\Services\InverterCommander\Transformers\FloatTransformation;
 use Illuminate\Process\Exceptions\ProcessFailedException;
 use Illuminate\Process\PendingProcess;
 use Illuminate\Support\Facades\Process;
@@ -25,7 +26,17 @@ it('calls the python script with command data', function () {
         ])
         ->create();
 
-    (new PythonScript())->send($inverter, InverterCommand::UDC);
+    $mock = Mockery::mock(FloatTransformation::class);
+    $mock->shouldReceive('transform')
+        ->with('123')
+        ->once()
+        ->andReturn(123.0);
+    app()->instance(FloatTransformation::class, $mock);
+
+    $result = (new PythonScript())->send($inverter, InverterCommand::UDC);
+
+    expect($result)
+        ->toBe(123.0);
 
     Process::assertRan(function (PendingProcess $process) use ($inverter) {
         expect($process->command)

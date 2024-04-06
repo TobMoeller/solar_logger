@@ -2,6 +2,8 @@
 
 use App\Enums\InverterCommand;
 use App\Enums\TimespanUnit;
+use App\Services\InverterCommander\Transformers\DivideFloatByTenTransformation;
+use App\Services\InverterCommander\Transformers\FloatTransformation;
 
 it('returns output commands', function () {
     expect(InverterCommand::outputCommands())
@@ -33,3 +35,13 @@ it('returns a valid recorded at date', function (InverterCommand $command) {
     expect($timespan->isValidRecordedAtDate($command->getOutputDate()))
         ->toBeTrue();
 })->with(InverterCommand::outputCommands());
+
+it('returns divide float by ten transformer for output commands', function (InverterCommand $command) {
+    expect($command->transformationStrategy())
+        ->toBeInstanceOf(DivideFloatByTenTransformation::class);
+})->with(InverterCommand::outputCommands());
+
+it('returns float transformer for non output commands', function (InverterCommand $command) {
+    expect($command->transformationStrategy())
+        ->toBeInstanceOf(FloatTransformation::class);
+})->with(array_filter(InverterCommand::cases(), fn (InverterCommand $command) => ! $command->isOutputCommand()));
