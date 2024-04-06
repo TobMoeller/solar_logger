@@ -39,6 +39,6 @@ class PythonScript implements InverterCommanderContract
 
         throw_if($response['success'] === false, InverterUnreachable::class, $response['error']);
 
-        return $response['data'];
+        return $command->transformationStrategy()->transform($response['data']);
     }
 }
