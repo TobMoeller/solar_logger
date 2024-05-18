@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Export\Traits\IsExportable;
 
 class Inverter extends Model
 {
     use HasFactory;
+    use IsExportable;
 
     public $casts = [
         'is_monitored' => 'boolean',

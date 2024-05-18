@@ -7,10 +7,12 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Export\Traits\IsExportable;
 
 class InverterOutput extends Model
 {
     use HasFactory;
+    use IsExportable;
 
     public $casts = [
         'recorded_at' => 'date:Y-m-d',
