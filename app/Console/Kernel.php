@@ -7,6 +7,7 @@ use App\Jobs\NotifyForOfflineInverters;
 use DateTimeZone;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Modules\Export\Jobs\CreateMissingExportEntries;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,6 +29,11 @@ class Kernel extends ConsoleKernel
             $schedule->command('backup:clean')->daily()->at('01:00');
             $schedule->command('backup:run')->daily()->at('01:30');
         }
+
+        $schedule->call(CreateMissingExportEntries::class)
+            ->when(config('export.create_entries.enabled'))
+            ->everyFiveMinutes()
+            ->between('04:00', '22:00');
     }
 
     protected function scheduleTimezone(): DateTimeZone|string|null
