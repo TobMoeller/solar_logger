@@ -39,6 +39,7 @@ it('sends notifications for offline inverters', function () {
 });
 
 it('throws an exception if no email is provided', function () {
+    Config::set('inverter.notifications.email', null);
     (new NotifyForOfflineInverters())->handle();
 })->throws(Exception::class, 'No email provided');
 
