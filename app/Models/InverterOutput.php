@@ -7,9 +7,10 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Export\Contracts\Exportable;
 use Modules\Export\Traits\IsExportable;
 
-class InverterOutput extends Model
+class InverterOutput extends Model implements Exportable
 {
     use HasFactory;
     use IsExportable;

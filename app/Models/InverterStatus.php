@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Export\Contracts\Exportable;
 use Modules\Export\Traits\IsExportable;
 
-class InverterStatus extends Model
+class InverterStatus extends Model implements Exportable
 {
     use HasFactory;
     use IsExportable;

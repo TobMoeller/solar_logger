@@ -11,9 +11,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Export\Contracts\Exportable;
 use Modules\Export\Traits\IsExportable;
 
-class Inverter extends Model
+class Inverter extends Model implements Exportable
 {
     use HasFactory;
     use IsExportable;
