@@ -56,6 +56,20 @@ return [
             'throw' => false,
         ],
 
+        'backup' => [
+            'driver' => 'smb',
+            'workgroup' => 'WORKGROUP',
+            'host' => env('BACKUP_HOST'),
+            'path' => env('BACKUP_PATH', 'BackupSolarLogger'),
+            'username' => env('BACKUP_USERNAME'),
+            'password' => env('BACKUP_PASSWORD'),
+
+            // Optional Icewind SMB options
+            'smb_version_min' => \Icewind\SMB\IOptions::PROTOCOL_SMB3,
+            // 'smb_version_max' => \Icewind\SMB\IOptions::PROTOCOL_SMB3,
+            'timeout' => 20,
+        ],
+
     ],
 
     /*
