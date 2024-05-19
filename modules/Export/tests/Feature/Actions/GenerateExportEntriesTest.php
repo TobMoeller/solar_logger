@@ -1,7 +1,7 @@
 <?php
 
 use Modules\Export\Actions\GenerateExportEntries;
-use Modules\Export\Contracts\Exportable;
+use Modules\Export\Contracts\ExportableContract;
 use Modules\Export\Models\ExportEntry;
 
 it('it creates missing export entries', function (string $exportableClass) {
@@ -11,7 +11,7 @@ it('it creates missing export entries', function (string $exportableClass) {
         ->create();
 
     expect(
-        $exportablesWithoutExport->reduce(function (bool $carry, Exportable $exportable) {
+        $exportablesWithoutExport->reduce(function (bool $carry, ExportableContract $exportable) {
             return $carry && $exportable->exportEntry === null;
         }, true)
     )->toBeTrue();
@@ -20,7 +20,7 @@ it('it creates missing export entries', function (string $exportableClass) {
     (new GenerateExportEntries())->handle();
 
     expect(
-        $exportablesWithoutExport->fresh()->reduce(function (bool $carry, Exportable $exportable) {
+        $exportablesWithoutExport->fresh()->reduce(function (bool $carry, ExportableContract $exportable) {
             return $carry && $exportable->exportEntry instanceof ExportEntry;
         }, true)
     )->toBeTrue();

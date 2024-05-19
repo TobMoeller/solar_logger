@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Export\Contracts\Exportable;
-use Modules\Export\Traits\IsExportable;
+use Modules\Export\Contracts\ExportableContract;
+use Modules\Export\Traits\Exportable;
 
-class InverterStatus extends Model implements Exportable
+class InverterStatus extends Model implements ExportableContract
 {
     use HasFactory;
-    use IsExportable;
+    use Exportable;
 
     public $casts = [
         'is_online' => 'boolean',

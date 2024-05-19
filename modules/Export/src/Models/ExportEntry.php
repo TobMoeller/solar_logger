@@ -8,7 +8,7 @@ use App\Models\InverterStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Modules\Export\Contracts\Exportable;
+use Modules\Export\Contracts\ExportableContract;
 use Modules\Export\Database\Factories\ExportEntryFactory;
 
 class ExportEntry extends Model
@@ -25,7 +25,7 @@ class ExportEntry extends Model
     }
 
     /**
-     * @return array<int, class-string<Exportable&Model>>
+     * @return array<int, class-string<ExportableContract&Model>>
      */
     public final static function exportables(): array
     {
@@ -44,7 +44,7 @@ class ExportEntry extends Model
         return $this->morphTo();
     }
 
-    public static function createFromExportable(Exportable $exportable): ExportEntry
+    public static function createFromExportable(ExportableContract $exportable): ExportEntry
     {
         return $exportable->exportEntry()->create();
     }

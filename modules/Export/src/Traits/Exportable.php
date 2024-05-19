@@ -5,7 +5,7 @@ namespace Modules\Export\Traits;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Modules\Export\Models\ExportEntry;
 
-trait IsExportable
+trait Exportable
 {
     /**
      * @return MorphOne<ExportEntry>

@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\Export\Contracts\Exportable;
-use Modules\Export\Traits\IsExportable;
+use Modules\Export\Contracts\ExportableContract;
+use Modules\Export\Traits\Exportable;
 
-class Inverter extends Model implements Exportable
+class Inverter extends Model implements ExportableContract
 {
     use HasFactory;
-    use IsExportable;
+    use Exportable;
 
     public $casts = [
         'is_monitored' => 'boolean',
