@@ -2,7 +2,9 @@
 
 namespace Modules\Export;
 
+use Illuminate\Contracts\Cache\Lock;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +21,13 @@ class ExportServiceProvider extends ServiceProvider
                 ->withToken(Config::get('export.export_to_server.token'))
                 ->timeout(Config::get('export.export_to_server.timeout'))
                 ->connectTimeout(Config::get('export.export_to_server.connect_timeout'));
+        });
+
+        Cache::macro('exportLock', function (): Lock {
+            return Cache::lock('export_exportables_lock', (10 * 60));
+        });
+        Cache::macro('restoreExportLock', function (string $lockOwner): Lock {
+            return Cache::restoreLock('export_exportables_lock', $lockOwner);
         });
     }
 }
