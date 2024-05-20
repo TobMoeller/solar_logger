@@ -11,4 +11,11 @@ interface ExportableContract
      * @return MorphOne<ExportEntry>
      */
     public function exportEntry(): MorphOne;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getExportData(): array;
+
+    public static function getExportResourcePath(): string;
 }

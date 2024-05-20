@@ -11,10 +11,15 @@
 |
 */
 
-uses(
-    Tests\TestCase::class,
-    Illuminate\Foundation\Testing\RefreshDatabase::class,
-)->in('Feature', '../modules/*/tests/Feature');
+use Tests\TestCase;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+uses(TestCase::class, RefreshDatabase::class)
+    ->beforeEach(function () {
+        Http::preventStrayRequests();
+    })
+    ->in('Feature', '../modules/*/tests/Feature');
 
 /*
 |--------------------------------------------------------------------------

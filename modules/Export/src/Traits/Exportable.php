@@ -14,4 +14,9 @@ trait Exportable
     {
         return $this->morphOne(ExportEntry::class, 'exportable');
     }
+
+    public function getExportData(): array
+    {
+        return $this->toArray();
+    }
 }

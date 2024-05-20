@@ -24,4 +24,14 @@ class InverterStatus extends Model implements ExportableContract
     {
         return $this->belongsTo(Inverter::class);
     }
+
+    public static function getExportResourcePath(): string
+    {
+        return 'inverter-status';
+    }
+
+    public function getExportData(): array
+    {
+        return $this->toArray();
+    }
 }

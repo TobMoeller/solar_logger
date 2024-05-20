@@ -24,6 +24,14 @@ class Inverter extends Model implements ExportableContract
     ];
 
     /**
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'ip',
+        'port',
+    ];
+
+    /**
      * @return HasMany<InverterOutput>
      */
     public function outputs(): HasMany
@@ -86,5 +94,17 @@ class Inverter extends Model implements ExportableContract
             $query->where('is_online', true)
                 ->where('created_at', '>=', now()->subDay());
         });
+    }
+
+    public static function getExportResourcePath(): string
+    {
+        return 'inverters';
+    }
+
+    public function getExportData(): array
+    {
+        return [
+            'name' => $this->name ?? (string) $this->id,
+        ];
     }
 }

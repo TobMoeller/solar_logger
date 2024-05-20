@@ -19,6 +19,11 @@ class ExportEntry extends Model
         'exported_at' => 'datetime',
     ];
 
+    public $fillable = [
+        'server_id',
+        'exported_at',
+    ];
+
     protected static function newFactory(): ExportEntryFactory
     {
         return ExportEntryFactory::new();
@@ -47,5 +52,10 @@ class ExportEntry extends Model
     public static function createFromExportable(ExportableContract $exportable): ExportEntry
     {
         return $exportable->exportEntry()->create();
+    }
+
+    public function hasServerId(): bool
+    {
+        return ! empty($this->server_id);
     }
 }

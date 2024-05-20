@@ -34,3 +34,23 @@ parameters:
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:each\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Model, int\\|string\\)\\: mixed, Closure\\(Illuminate\\\\Database\\\\Eloquent\\\\Model&Modules\\\\Export\\\\Contracts\\\\ExportableContract\\)\\: void given\\.$#"
 			count: 1
 			path: modules/Export/src/Actions/GenerateExportEntries.php
+
+		-
+			message: "#^Parameter \\#1 \\$seconds of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:connectTimeout\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$seconds of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:timeout\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$token of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:withToken\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$url of static method Illuminate\\\\Support\\\\Facades\\\\Http\\:\\:baseUrl\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php

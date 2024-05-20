@@ -34,4 +34,14 @@ class InverterOutput extends Model implements ExportableContract
     {
         $query->whereDate('updated_at', now());
     }
+
+    public static function getExportResourcePath(): string
+    {
+        return 'inverter-outputs';
+    }
+
+    public function getExportData(): array
+    {
+        return $this->toArray();
+    }
 }
