@@ -22,6 +22,7 @@ class DispatchExportJobs
 
         if (! $lock->get()) {
             Log::error(static::class.': Lock could not be akquired, previous export jobs are still running');
+
             return;
         }
 

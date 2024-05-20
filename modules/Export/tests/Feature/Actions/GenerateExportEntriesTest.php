@@ -16,7 +16,6 @@ it('it creates missing export entries', function (string $exportableClass) {
         }, true)
     )->toBeTrue();
 
-
     (new GenerateExportEntries())->handle();
 
     expect(

@@ -23,4 +23,3 @@ class ClearExportLock implements ShouldQueue
         Cache::restoreExportLock($this->lockOwner)->release();
     }
 }
-

@@ -10,8 +10,8 @@ use Modules\Export\Traits\Exportable;
 
 class InverterStatus extends Model implements ExportableContract
 {
-    use HasFactory;
     use Exportable;
+    use HasFactory;
 
     public $casts = [
         'is_online' => 'boolean',

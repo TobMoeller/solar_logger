@@ -14,8 +14,8 @@ use Modules\Export\Contracts\ExportableContract;
 
 class ExportExportable implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Batchable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * @return array<int, int>
@@ -35,4 +35,3 @@ class ExportExportable implements ShouldQueue
         $exportToServer->handle($this->exportable);
     }
 }
-

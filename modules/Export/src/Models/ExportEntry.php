@@ -32,7 +32,7 @@ class ExportEntry extends Model
     /**
      * @return array<int, class-string<ExportableContract&Model>>
      */
-    public final static function exportables(): array
+    final public static function exportables(): array
     {
         return [
             Inverter::class,

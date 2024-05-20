@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Modules\Export\Actions\GenerateExportEntries;
 
-class CreateMissingExportEntries implements ShouldQueue, ShouldBeUnique
+class CreateMissingExportEntries implements ShouldBeUnique, ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

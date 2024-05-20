@@ -16,8 +16,8 @@ use Modules\Export\Traits\Exportable;
 
 class Inverter extends Model implements ExportableContract
 {
-    use HasFactory;
     use Exportable;
+    use HasFactory;
 
     public $casts = [
         'is_monitored' => 'boolean',

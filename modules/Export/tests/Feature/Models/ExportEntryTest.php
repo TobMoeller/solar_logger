@@ -28,4 +28,3 @@ it('creates an export entry for an exportable', function (string $exportableClas
         'exportable_type' => $exportable::class,
     ]);
 })->with(ExportEntry::exportables());
-

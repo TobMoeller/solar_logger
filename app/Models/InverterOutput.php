@@ -12,8 +12,8 @@ use Modules\Export\Traits\Exportable;
 
 class InverterOutput extends Model implements ExportableContract
 {
-    use HasFactory;
     use Exportable;
+    use HasFactory;
 
     public $casts = [
         'recorded_at' => 'date:Y-m-d',

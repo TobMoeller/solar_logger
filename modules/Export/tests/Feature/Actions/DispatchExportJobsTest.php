@@ -65,7 +65,7 @@ it('dispatches export jobs for updated and new export entries', function () {
                 $batch->jobs->reduce(function (bool $carry, ShouldQueue $job) use ($shouldGetExported) {
                     return $carry &&
                         $job instanceof ExportExportable &&
-                        $job->exportable::class === ExportEntry::exportables()[0] &&
+                        ExportEntry::exportables()[0] === $job->exportable::class &&
                         in_array($job->exportable->id, $shouldGetExported[0]->pluck('id')->toArray());
                 }, true);
         }),
@@ -74,7 +74,7 @@ it('dispatches export jobs for updated and new export entries', function () {
                 $batch->jobs->reduce(function (bool $carry, ShouldQueue $job) use ($shouldGetExported) {
                     return $carry &&
                         $job instanceof ExportExportable &&
-                        $job->exportable::class === ExportEntry::exportables()[1] &&
+                        ExportEntry::exportables()[1] === $job->exportable::class &&
                         in_array($job->exportable->id, $shouldGetExported[1]->pluck('id')->toArray());
                 }, true);
         }),
@@ -83,7 +83,7 @@ it('dispatches export jobs for updated and new export entries', function () {
                 $batch->jobs->reduce(function (bool $carry, ShouldQueue $job) use ($shouldGetExported) {
                     return $carry &&
                         $job instanceof ExportExportable &&
-                        $job->exportable::class === ExportEntry::exportables()[2] &&
+                        ExportEntry::exportables()[2] === $job->exportable::class &&
                         in_array($job->exportable->id, $shouldGetExported[2]->pluck('id')->toArray());
                 }, true);
         }),

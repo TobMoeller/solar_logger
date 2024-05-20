@@ -2,7 +2,6 @@
 
 namespace Modules\Export\Database\Factories;
 
-use App\Models\Inverter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Export\Models\ExportEntry;
 
