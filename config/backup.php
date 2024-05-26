@@ -2,6 +2,8 @@
 
 return [
 
+    'enabled' => env('BACKUP_ENABLED', false),
+
     'backup' => [
 
         /*
@@ -343,7 +345,6 @@ return [
          */
         'retry_delay' => 0,
 
-        'enabled' => env('BACKUP_ENABLED', false),
     ],
 
 ];
