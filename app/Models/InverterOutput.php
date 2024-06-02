@@ -53,7 +53,7 @@ class InverterOutput extends Model implements ExportableContract
             'inverter_id' => $inverterId,
             'output' => $this->output,
             'timespan' => $this->timespan,
-            'recorded_at' => $this->recorded_at,
+            'recorded_at' => $this->recorded_at?->toDateString(),
         ];
     }
 }

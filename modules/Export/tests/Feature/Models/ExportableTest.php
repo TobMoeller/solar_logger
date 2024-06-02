@@ -33,7 +33,7 @@ test('inverter output has export data', function () {
             'inverter_id' => $inverter->exportEntry->server_id,
             'output' => $inverterOutput->output,
             'timespan' => $inverterOutput->timespan,
-            'recorded_at' => $inverterOutput->recorded_at,
+            'recorded_at' => $inverterOutput->recorded_at->toDateString(),
         ]);
 });
 
