@@ -2,8 +2,18 @@ parameters:
 	ignoreErrors:
 		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Console\\\\Scheduling\\\\Event\\:\\:when\\(\\) expects bool\\|Closure, mixed given\\.$#"
-			count: 2
+			count: 4
 			path: app/Console/Kernel.php
+
+		-
+			message: "#^Access to an undefined property Modules\\\\Export\\\\Models\\\\ExportEntry\\:\\:\\$server_id\\.$#"
+			count: 1
+			path: app/Models/InverterOutput.php
+
+		-
+			message: "#^Access to an undefined property Modules\\\\Export\\\\Models\\\\ExportEntry\\:\\:\\$server_id\\.$#"
+			count: 1
+			path: app/Models/InverterStatus.php
 
 		-
 			message: "#^Access to an undefined property App\\\\Models\\\\Inverter\\:\\:\\$is_online\\.$#"
@@ -29,3 +39,28 @@ parameters:
 			message: "#^Property App\\\\Models\\\\InverterStatus\\:\\:\\$udc \\(float\\|null\\) does not accept mixed\\.$#"
 			count: 1
 			path: app/Services/InverterMonitor.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:each\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Model, int\\|string\\)\\: mixed, Closure\\(Illuminate\\\\Database\\\\Eloquent\\\\Model&Modules\\\\Export\\\\Contracts\\\\ExportableContract\\)\\: void given\\.$#"
+			count: 1
+			path: modules/Export/src/Actions/GenerateExportEntries.php
+
+		-
+			message: "#^Parameter \\#1 \\$seconds of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:connectTimeout\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$seconds of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:timeout\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$token of method Illuminate\\\\Http\\\\Client\\\\PendingRequest\\:\\:withToken\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php
+
+		-
+			message: "#^Parameter \\#1 \\$url of static method Illuminate\\\\Support\\\\Facades\\\\Http\\:\\:baseUrl\\(\\) expects string, mixed given\\.$#"
+			count: 1
+			path: modules/Export/src/ExportServiceProvider.php

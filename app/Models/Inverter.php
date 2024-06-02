@@ -11,13 +11,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\Export\Contracts\ExportableContract;
+use Modules\Export\Traits\Exportable;
 
-class Inverter extends Model
+class Inverter extends Model implements ExportableContract
 {
+    use Exportable;
     use HasFactory;
 
     public $casts = [
         'is_monitored' => 'boolean',
+    ];
+
+    /**
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'ip',
+        'port',
     ];
 
     /**
@@ -83,5 +94,17 @@ class Inverter extends Model
             $query->where('is_online', true)
                 ->where('created_at', '>=', now()->subDay());
         });
+    }
+
+    public static function getExportResourcePath(): string
+    {
+        return 'inverters';
+    }
+
+    public function getExportData(): array
+    {
+        return [
+            'name' => $this->name ?? (string) $this->id,
+        ];
     }
 }
