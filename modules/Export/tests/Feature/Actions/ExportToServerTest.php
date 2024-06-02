@@ -3,6 +3,7 @@
 use App\Models\Inverter;
 use App\Models\InverterOutput;
 use App\Models\InverterStatus;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
@@ -29,6 +30,10 @@ it('throws an exception for failed requests', function (string $exportableClass)
     ]);
 
     $exportable = $exportableClass::factory()
+        ->when(
+            in_array($exportableClass, [InverterOutput::class, InverterStatus::class]),
+            fn (Factory $factory) => $factory->for(Inverter::factory()->has(ExportEntry::factory()))
+        )
         ->has(ExportEntry::factory(), 'exportEntry')
         ->create();
 
@@ -52,7 +57,12 @@ it('sends a post request for new exports', function (string $exportableClass) {
         $this->fakeUrl.'*' => Http::response($responseData, 201),
     ]);
 
-    $exportable = $exportableClass::factory()->create();
+    $exportable = $exportableClass::factory()
+        ->when(
+            in_array($exportableClass, [InverterOutput::class, InverterStatus::class]),
+            fn (Factory $factory) => $factory->for(Inverter::factory()->has(ExportEntry::factory()))
+        )
+        ->create();
 
     $exportEntry = ExportEntry::factory()
         ->for($exportable, 'exportable')
@@ -89,7 +99,12 @@ it('sends a put request for existing exports', function (string $exportableClass
         $this->fakeUrl.'*' => Http::response($responseData, 200),
     ]);
 
-    $exportable = $exportableClass::factory()->create();
+    $exportable = $exportableClass::factory()
+        ->when(
+            in_array($exportableClass, [InverterOutput::class, InverterStatus::class]),
+            fn (Factory $factory) => $factory->for(Inverter::factory()->has(ExportEntry::factory()))
+        )
+        ->create();
 
     $exportEntry = ExportEntry::factory()
         ->for($exportable, 'exportable')

@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Http;
 use Modules\Export\Contracts\ExportableContract;
 use Modules\Export\Exceptions\ExportFailed;
 use Modules\Export\Exceptions\MissingExportEntry;
+use Modules\Export\Exceptions\MissingRelatedExportEntry;
 
 class ExportToServer
 {
     /**
      * @throws MissingExportEntry
+     * @throws MissingRelatedExportEntry
      * @throws ExportFailed
      */
     public function handle(ExportableContract $exportable): void

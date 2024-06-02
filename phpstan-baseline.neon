@@ -6,6 +6,16 @@ parameters:
 			path: app/Console/Kernel.php
 
 		-
+			message: "#^Access to an undefined property Modules\\\\Export\\\\Models\\\\ExportEntry\\:\\:\\$server_id\\.$#"
+			count: 1
+			path: app/Models/InverterOutput.php
+
+		-
+			message: "#^Access to an undefined property Modules\\\\Export\\\\Models\\\\ExportEntry\\:\\:\\$server_id\\.$#"
+			count: 1
+			path: app/Models/InverterStatus.php
+
+		-
 			message: "#^Access to an undefined property App\\\\Models\\\\Inverter\\:\\:\\$is_online\\.$#"
 			count: 1
 			path: app/Services/InverterMonitor.php
