@@ -62,6 +62,5 @@ it('throws a missing related export entry exception', function (string $class) {
         ->toThrow(MissingRelatedExportEntry::class);
 })->with(fn () => [
     InverterOutput::class,
-    InverterStatus::class
+    InverterStatus::class,
 ]);
-

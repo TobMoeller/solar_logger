@@ -14,8 +14,9 @@ interface ExportableContract
     public function exportEntry(): MorphOne;
 
     /**
-     * @throws MissingRelatedExportEntry
      * @return array<string, mixed>
+     *
+     * @throws MissingRelatedExportEntry
      */
     public function getExportData(): array;
 
