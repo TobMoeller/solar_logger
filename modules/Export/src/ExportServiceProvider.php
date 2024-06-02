@@ -18,6 +18,7 @@ class ExportServiceProvider extends ServiceProvider
 
         Http::macro('exportServer', function (): PendingRequest {
             return Http::baseUrl(Config::get('export.export_to_server.base_url'))
+                ->withHeader('Accept', 'application/json')
                 ->withToken(Config::get('export.export_to_server.token'))
                 ->timeout(Config::get('export.export_to_server.timeout'))
                 ->connectTimeout(Config::get('export.export_to_server.connect_timeout'));

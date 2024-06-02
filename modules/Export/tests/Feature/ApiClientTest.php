@@ -20,6 +20,7 @@ it('creats a pending request instance', function () {
         ->getOptions()->toMatchArray([
             'headers' => [
                 'Authorization' => 'Bearer ::token::',
+                'Accept' => 'application/json',
             ],
             'timeout' => 123,
             'connect_timeout' => 321,
