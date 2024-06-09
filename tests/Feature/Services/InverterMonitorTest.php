@@ -141,25 +141,25 @@ it('updates inverter outputs', function () {
         ->state(new Sequence(
             [
                 'timespan' => TimespanUnit::DAY,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfDay(),
                 'updated_at' => now(),
             ],
             [
                 'timespan' => TimespanUnit::DAY,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->yesterday(),
                 'updated_at' => now()->yesterday(),
             ],
             [
                 'timespan' => TimespanUnit::MONTH,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfMonth(),
                 'updated_at' => now()->yesterday(),
             ],
             [
                 'timespan' => TimespanUnit::YEAR,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfYear(),
                 'updated_at' => now()->yesterday(),
             ],
@@ -231,25 +231,25 @@ it('updates only the output of the current day if ealier outputs have already be
         ->state(new Sequence(
             [
                 'timespan' => TimespanUnit::DAY,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfDay(),
                 'updated_at' => now(),
             ],
             [
                 'timespan' => TimespanUnit::DAY,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->yesterday(),
                 'updated_at' => now(),
             ],
             [
                 'timespan' => TimespanUnit::MONTH,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfMonth(),
                 'updated_at' => now(),
             ],
             [
                 'timespan' => TimespanUnit::YEAR,
-                'output' => 9999,
+                'output' => 999,
                 'recorded_at' => now()->startOfYear(),
                 'updated_at' => now(),
             ],
@@ -276,9 +276,9 @@ it('updates only the output of the current day if ealier outputs have already be
     expect($outputs->fresh()->pluck('output'))
         ->toMatchArray([
             1111,
-            9999,
-            9999,
-            9999,
+            999,
+            999,
+            999,
         ]);
 
     Carbon::setTestNow();

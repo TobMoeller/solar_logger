@@ -62,3 +62,27 @@ it('throws an exception for invalid recorded_at dates', function () {
             12345
         );
 })->throws(InvalidInverterCommand::class, 'Invalid command');
+
+it('does not update an inverter output with invalid data', function (InverterCommand $command) {
+    $inverter = Inverter::factory()
+        ->create();
+
+    $output = InverterOutput::factory()
+        ->state([
+            'output' => '11111',
+            'timespan' => $command->getOutputTimespan(),
+            'recorded_at' => $command->getOutputDate(),
+        ])
+        ->for($inverter)
+        ->create();
+
+    (new UpdateOrCreateInverterOutput())
+        ->handle(
+            $inverter,
+            $command,
+            0
+        );
+
+    expect($output->fresh())
+        ->output->toBe(11111);
+})->with(InverterCommand::outputCommands());

@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Property App\\\\Models\\\\InverterOutput\\:\\:\\$output \\(float\\) does not accept mixed\\.$#"
+			count: 1
+			path: app/Actions/UpdateOrCreateInverterOutput.php
+
+		-
 			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Console\\\\Scheduling\\\\Event\\:\\:when\\(\\) expects bool\\|Closure, mixed given\\.$#"
 			count: 4
 			path: app/Console/Kernel.php
