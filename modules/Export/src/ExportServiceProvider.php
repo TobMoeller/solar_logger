@@ -25,8 +25,9 @@ class ExportServiceProvider extends ServiceProvider
         });
 
         Cache::macro('exportLock', function (): Lock {
-            return Cache::lock('export_exportables_lock', (10 * 60));
+            return Cache::lock('export_exportables_lock', (24 * 60 * 60));
         });
+
         Cache::macro('restoreExportLock', function (string $lockOwner): Lock {
             return Cache::restoreLock('export_exportables_lock', $lockOwner);
         });

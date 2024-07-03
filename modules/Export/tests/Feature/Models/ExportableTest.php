@@ -52,6 +52,7 @@ test('inverter status has export data', function () {
             'idc' => $InverterStatus->idc,
             'pac' => $InverterStatus->pac,
             'pdc' => $InverterStatus->pdc,
+            'recorded_at' => $InverterStatus->created_at->toJSON(),
         ]);
 });
 
