@@ -46,6 +46,7 @@ class InverterStatus extends Model implements ExportableContract
             'idc' => $this->idc,
             'pac' => $this->pac,
             'pdc' => $this->pdc,
+            'recorded_at' => $this->created_at?->toJSON(),
         ];
     }
 }
