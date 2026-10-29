@@ -8,7 +8,7 @@ use Modules\Export\Models\ExportEntry;
 trait Exportable
 {
     /**
-     * @return MorphOne<ExportEntry>
+     * @return MorphOne<ExportEntry, $this>
      */
     public function exportEntry(): MorphOne
     {

@@ -32,12 +32,16 @@ class PythonScript implements InverterCommanderContract
         throw_if(
             $process->failed() ||
             ! is_array($response = json_decode($process->output(), true)) ||
-            ! Arr::has($response, ['success', 'data', 'error']),
+            ! Arr::has($response, ['success', 'data', 'error']) ||
+            ! is_bool($response['success']) ||
+            (! $response['success'] && ! is_string($response['error'])),
             ProcessFailedException::class,
             $process
         );
 
         throw_if($response['success'] === false, InverterUnreachable::class, $response['error']);
+
+        throw_unless(is_string($response['data']), ProcessFailedException::class, $process);
 
         return $command->transformationStrategy()->transform($response['data']);
     }

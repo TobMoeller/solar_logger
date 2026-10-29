@@ -8,7 +8,7 @@ parameters:
         - app/
         - modules/Export/src/
 
-    # Level 9 is the highest level
+    # Keep the existing strict analysis level
     level: 9
 
 #    ignoreErrors:

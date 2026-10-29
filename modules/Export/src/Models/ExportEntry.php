@@ -13,6 +13,7 @@ use Modules\Export\Database\Factories\ExportEntryFactory;
 
 class ExportEntry extends Model
 {
+    /** @use HasFactory<ExportEntryFactory> */
     use HasFactory;
 
     public $casts = [
@@ -42,7 +43,7 @@ class ExportEntry extends Model
     }
 
     /**
-     * @return MorphTo<Model, ExportEntry>
+     * @return MorphTo<Model, $this>
      */
     public function exportable(): MorphTo
     {

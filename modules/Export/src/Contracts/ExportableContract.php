@@ -2,6 +2,7 @@
 
 namespace Modules\Export\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Modules\Export\Exceptions\MissingRelatedExportEntry;
 use Modules\Export\Models\ExportEntry;
@@ -9,7 +10,7 @@ use Modules\Export\Models\ExportEntry;
 interface ExportableContract
 {
     /**
-     * @return MorphOne<ExportEntry>
+     * @return MorphOne<ExportEntry, $this&Model>
      */
     public function exportEntry(): MorphOne;
 

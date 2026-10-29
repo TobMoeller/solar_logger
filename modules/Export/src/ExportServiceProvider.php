@@ -17,11 +17,11 @@ class ExportServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/export.php', 'export');
 
         Http::macro('exportServer', function (): PendingRequest {
-            return Http::baseUrl(Config::get('export.export_to_server.base_url'))
+            return Http::baseUrl(Config::string('export.export_to_server.base_url'))
                 ->withHeader('Accept', 'application/json')
-                ->withToken(Config::get('export.export_to_server.token'))
-                ->timeout(Config::get('export.export_to_server.timeout'))
-                ->connectTimeout(Config::get('export.export_to_server.connect_timeout'));
+                ->withToken(Config::string('export.export_to_server.token'))
+                ->timeout(Config::integer('export.export_to_server.timeout'))
+                ->connectTimeout(Config::integer('export.export_to_server.connect_timeout'));
         });
 
         Cache::macro('exportLock', function (): Lock {

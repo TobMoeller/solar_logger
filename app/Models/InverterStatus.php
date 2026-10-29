@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\InverterStatusFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,8 @@ use Modules\Export\Traits\Exportable;
 class InverterStatus extends Model implements ExportableContract
 {
     use Exportable;
+
+    /** @use HasFactory<InverterStatusFactory> */
     use HasFactory;
 
     public $casts = [
@@ -19,7 +22,7 @@ class InverterStatus extends Model implements ExportableContract
     ];
 
     /**
-     * @return BelongsTo<Inverter, InverterStatus>
+     * @return BelongsTo<Inverter, $this>
      */
     public function inverter(): BelongsTo
     {
@@ -33,11 +36,11 @@ class InverterStatus extends Model implements ExportableContract
 
     public function getExportData(): array
     {
-        throw_unless(
-            $inverterId = $this->inverter?->exportEntry?->server_id,
-            MissingRelatedExportEntry::class,
-            $this, $this->inverter ?? 'inverter'
-        );
+        $inverterId = $this->inverter?->exportEntry?->server_id;
+
+        if (! $inverterId) {
+            throw new MissingRelatedExportEntry($this, $this->inverter ?? 'inverter');
+        }
 
         return [
             'inverter_id' => $inverterId,

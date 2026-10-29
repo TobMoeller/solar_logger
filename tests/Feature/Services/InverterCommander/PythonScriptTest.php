@@ -10,6 +10,20 @@ use Illuminate\Process\Exceptions\ProcessFailedException;
 use Illuminate\Process\PendingProcess;
 use Illuminate\Support\Facades\Process;
 
+it('rejects malformed python response fields', function (array $response) {
+    Process::fake(['*' => Process::result(json_encode($response))]);
+
+    $inverter = Inverter::factory()->create();
+
+    expect(fn () => (new PythonScript)->send($inverter, InverterCommand::UDC))
+        ->toThrow(ProcessFailedException::class);
+})->with([
+    'non-boolean success' => [['success' => 'true', 'data' => '123', 'error' => null]],
+    'non-string data' => [['success' => true, 'data' => 123, 'error' => null]],
+    'missing data' => [['success' => true, 'error' => null]],
+    'non-string error' => [['success' => false, 'data' => null, 'error' => []]],
+]);
+
 it('calls the python script with command data', function () {
     Process::fake([
         '*' => Process::result(json_encode([
@@ -33,7 +47,7 @@ it('calls the python script with command data', function () {
         ->andReturn(123.0);
     app()->instance(FloatTransformation::class, $mock);
 
-    $result = (new PythonScript())->send($inverter, InverterCommand::UDC);
+    $result = (new PythonScript)->send($inverter, InverterCommand::UDC);
 
     expect($result)
         ->toBe(123.0);
@@ -62,7 +76,7 @@ it('throws an invalid inverter exception', function (?string $ip, ?int $port) {
         ])
         ->create();
 
-    expect(fn () => (new PythonScript())->send($inverter, InverterCommand::UDC))
+    expect(fn () => (new PythonScript)->send($inverter, InverterCommand::UDC))
         ->toThrow(InvalidInverter::class, 'Missing IP address or port');
 
     Process::assertNothingRan();
@@ -83,7 +97,7 @@ it('throws process failed exception', function () {
         ])
         ->create();
 
-    expect(fn () => (new PythonScript())->send($inverter, InverterCommand::UDC))
+    expect(fn () => (new PythonScript)->send($inverter, InverterCommand::UDC))
         ->toThrow(ProcessFailedException::class);
 
     Process::assertRan(function (PendingProcess $process) use ($inverter) {
@@ -116,7 +130,7 @@ it('throws a inverter unreachable exception', function () {
         ])
         ->create();
 
-    expect(fn () => (new PythonScript())->send($inverter, InverterCommand::UDC))
+    expect(fn () => (new PythonScript)->send($inverter, InverterCommand::UDC))
         ->toThrow(InverterUnreachable::class);
 
     Process::assertRan(function (PendingProcess $process) use ($inverter) {

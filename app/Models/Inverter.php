@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\InverterCommand;
 use App\Exceptions\InvalidInverterCommand;
 use App\Services\InverterCommander;
+use Database\Factories\InverterFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,8 @@ use Modules\Export\Traits\Exportable;
 class Inverter extends Model implements ExportableContract
 {
     use Exportable;
+
+    /** @use HasFactory<InverterFactory> */
     use HasFactory;
 
     public $casts = [
@@ -24,7 +27,7 @@ class Inverter extends Model implements ExportableContract
     ];
 
     /**
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'ip',
@@ -32,7 +35,7 @@ class Inverter extends Model implements ExportableContract
     ];
 
     /**
-     * @return HasMany<InverterOutput>
+     * @return HasMany<InverterOutput, $this>
      */
     public function outputs(): HasMany
     {
@@ -40,7 +43,7 @@ class Inverter extends Model implements ExportableContract
     }
 
     /**
-     * @return HasMany<InverterStatus>
+     * @return HasMany<InverterStatus, $this>
      */
     public function statuses(): HasMany
     {
@@ -53,7 +56,7 @@ class Inverter extends Model implements ExportableContract
     }
 
     /**
-     * @return HasOne<InverterStatus>
+     * @return HasOne<InverterStatus, $this>
      */
     public function latestStatus(): HasOne
     {
@@ -65,7 +68,7 @@ class Inverter extends Model implements ExportableContract
      */
     public function isOnline(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn (): bool => $this->latestStatus?->is_online && $this->latestStatus->created_at?->greaterThanOrEqualTo(now()->subMinutes(30)),
         );
     }
